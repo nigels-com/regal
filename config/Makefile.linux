@@ -5,7 +5,6 @@ LD = cc
 RANLIB :=
 # don't use abi-dumper by default
 # ABIDUMP = abi-dumper -bin-only -lver HEAD
-ABIDUMP =
 EXT.DYNAMIC = so
 PICFLAG = -fPIC
 M_ARCH ?= $(shell uname -m)
