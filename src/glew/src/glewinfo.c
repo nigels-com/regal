@@ -1556,6 +1556,10 @@ static void _glewInfo_GL_ARB_direct_state_access (void)
   glewInfoFunc("glGetNamedFramebufferAttachmentParameteriv", glGetNamedFramebufferAttachmentParameteriv == NULL);
   glewInfoFunc("glGetNamedFramebufferParameteriv", glGetNamedFramebufferParameteriv == NULL);
   glewInfoFunc("glGetNamedRenderbufferParameteriv", glGetNamedRenderbufferParameteriv == NULL);
+  glewInfoFunc("glGetQueryBufferObjecti64v", glGetQueryBufferObjecti64v == NULL);
+  glewInfoFunc("glGetQueryBufferObjectiv", glGetQueryBufferObjectiv == NULL);
+  glewInfoFunc("glGetQueryBufferObjectui64v", glGetQueryBufferObjectui64v == NULL);
+  glewInfoFunc("glGetQueryBufferObjectuiv", glGetQueryBufferObjectuiv == NULL);
   glewInfoFunc("glGetTextureImage", glGetTextureImage == NULL);
   glewInfoFunc("glGetTextureLevelParameterfv", glGetTextureLevelParameterfv == NULL);
   glewInfoFunc("glGetTextureLevelParameteriv", glGetTextureLevelParameteriv == NULL);
@@ -4578,6 +4582,17 @@ static void _glewInfo_GL_EXT_polygon_offset (void)
 
 #endif /* GL_EXT_polygon_offset */
 
+#ifdef GL_EXT_polygon_offset_clamp
+
+static void _glewInfo_GL_EXT_polygon_offset_clamp (void)
+{
+  glewPrintExt("GL_EXT_polygon_offset_clamp", GLEW_EXT_polygon_offset_clamp, glewIsSupported("GL_EXT_polygon_offset_clamp"), glewGetExtension("GL_EXT_polygon_offset_clamp"));
+
+  glewInfoFunc("glPolygonOffsetClampEXT", glPolygonOffsetClampEXT == NULL);
+}
+
+#endif /* GL_EXT_polygon_offset_clamp */
+
 #ifdef GL_EXT_provoking_vertex
 
 static void _glewInfo_GL_EXT_provoking_vertex (void)
@@ -6133,18 +6148,28 @@ static void _glewInfo_GL_NV_path_rendering (void)
   glewInfoFunc("glGetPathSpacingNV", glGetPathSpacingNV == NULL);
   glewInfoFunc("glGetPathTexGenfvNV", glGetPathTexGenfvNV == NULL);
   glewInfoFunc("glGetPathTexGenivNV", glGetPathTexGenivNV == NULL);
+  glewInfoFunc("glGetProgramResourcefvNV", glGetProgramResourcefvNV == NULL);
   glewInfoFunc("glInterpolatePathsNV", glInterpolatePathsNV == NULL);
   glewInfoFunc("glIsPathNV", glIsPathNV == NULL);
   glewInfoFunc("glIsPointInFillPathNV", glIsPointInFillPathNV == NULL);
   glewInfoFunc("glIsPointInStrokePathNV", glIsPointInStrokePathNV == NULL);
+  glewInfoFunc("glMatrixLoad3x2fNV", glMatrixLoad3x2fNV == NULL);
+  glewInfoFunc("glMatrixLoad3x3fNV", glMatrixLoad3x3fNV == NULL);
+  glewInfoFunc("glMatrixLoadTranspose3x3fNV", glMatrixLoadTranspose3x3fNV == NULL);
+  glewInfoFunc("glMatrixMult3x2fNV", glMatrixMult3x2fNV == NULL);
+  glewInfoFunc("glMatrixMult3x3fNV", glMatrixMult3x3fNV == NULL);
+  glewInfoFunc("glMatrixMultTranspose3x3fNV", glMatrixMultTranspose3x3fNV == NULL);
   glewInfoFunc("glPathColorGenNV", glPathColorGenNV == NULL);
   glewInfoFunc("glPathCommandsNV", glPathCommandsNV == NULL);
   glewInfoFunc("glPathCoordsNV", glPathCoordsNV == NULL);
   glewInfoFunc("glPathCoverDepthFuncNV", glPathCoverDepthFuncNV == NULL);
   glewInfoFunc("glPathDashArrayNV", glPathDashArrayNV == NULL);
   glewInfoFunc("glPathFogGenNV", glPathFogGenNV == NULL);
+  glewInfoFunc("glPathGlyphIndexArrayNV", glPathGlyphIndexArrayNV == NULL);
+  glewInfoFunc("glPathGlyphIndexRangeNV", glPathGlyphIndexRangeNV == NULL);
   glewInfoFunc("glPathGlyphRangeNV", glPathGlyphRangeNV == NULL);
   glewInfoFunc("glPathGlyphsNV", glPathGlyphsNV == NULL);
+  glewInfoFunc("glPathMemoryGlyphIndexArrayNV", glPathMemoryGlyphIndexArrayNV == NULL);
   glewInfoFunc("glPathParameterfNV", glPathParameterfNV == NULL);
   glewInfoFunc("glPathParameterfvNV", glPathParameterfvNV == NULL);
   glewInfoFunc("glPathParameteriNV", glPathParameteriNV == NULL);
@@ -6156,10 +6181,15 @@ static void _glewInfo_GL_NV_path_rendering (void)
   glewInfoFunc("glPathSubCoordsNV", glPathSubCoordsNV == NULL);
   glewInfoFunc("glPathTexGenNV", glPathTexGenNV == NULL);
   glewInfoFunc("glPointAlongPathNV", glPointAlongPathNV == NULL);
+  glewInfoFunc("glProgramPathFragmentInputGenNV", glProgramPathFragmentInputGenNV == NULL);
   glewInfoFunc("glStencilFillPathInstancedNV", glStencilFillPathInstancedNV == NULL);
   glewInfoFunc("glStencilFillPathNV", glStencilFillPathNV == NULL);
   glewInfoFunc("glStencilStrokePathInstancedNV", glStencilStrokePathInstancedNV == NULL);
   glewInfoFunc("glStencilStrokePathNV", glStencilStrokePathNV == NULL);
+  glewInfoFunc("glStencilThenCoverFillPathInstancedNV", glStencilThenCoverFillPathInstancedNV == NULL);
+  glewInfoFunc("glStencilThenCoverFillPathNV", glStencilThenCoverFillPathNV == NULL);
+  glewInfoFunc("glStencilThenCoverStrokePathInstancedNV", glStencilThenCoverStrokePathInstancedNV == NULL);
+  glewInfoFunc("glStencilThenCoverStrokePathNV", glStencilThenCoverStrokePathNV == NULL);
   glewInfoFunc("glTransformPathNV", glTransformPathNV == NULL);
   glewInfoFunc("glWeightPathsNV", glWeightPathsNV == NULL);
 }
@@ -6484,6 +6514,15 @@ static void _glewInfo_GL_NV_transform_feedback2 (void)
 }
 
 #endif /* GL_NV_transform_feedback2 */
+
+#ifdef GL_NV_uniform_buffer_unified_memory
+
+static void _glewInfo_GL_NV_uniform_buffer_unified_memory (void)
+{
+  glewPrintExt("GL_NV_uniform_buffer_unified_memory", GLEW_NV_uniform_buffer_unified_memory, glewIsSupported("GL_NV_uniform_buffer_unified_memory"), glewGetExtension("GL_NV_uniform_buffer_unified_memory"));
+}
+
+#endif /* GL_NV_uniform_buffer_unified_memory */
 
 #ifdef GL_NV_vdpau_interop
 
@@ -9947,6 +9986,9 @@ static void glewInfo (void)
 #ifdef GL_EXT_polygon_offset
   _glewInfo_GL_EXT_polygon_offset();
 #endif /* GL_EXT_polygon_offset */
+#ifdef GL_EXT_polygon_offset_clamp
+  _glewInfo_GL_EXT_polygon_offset_clamp();
+#endif /* GL_EXT_polygon_offset_clamp */
 #ifdef GL_EXT_provoking_vertex
   _glewInfo_GL_EXT_provoking_vertex();
 #endif /* GL_EXT_provoking_vertex */
@@ -10403,6 +10445,9 @@ static void glewInfo (void)
 #ifdef GL_NV_transform_feedback2
   _glewInfo_GL_NV_transform_feedback2();
 #endif /* GL_NV_transform_feedback2 */
+#ifdef GL_NV_uniform_buffer_unified_memory
+  _glewInfo_GL_NV_uniform_buffer_unified_memory();
+#endif /* GL_NV_uniform_buffer_unified_memory */
 #ifdef GL_NV_vdpau_interop
   _glewInfo_GL_NV_vdpau_interop();
 #endif /* GL_NV_vdpau_interop */

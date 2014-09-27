@@ -821,6 +821,10 @@ PFNGLGETNAMEDBUFFERSUBDATAPROC __glewGetNamedBufferSubData = NULL;
 PFNGLGETNAMEDFRAMEBUFFERATTACHMENTPARAMETERIVPROC __glewGetNamedFramebufferAttachmentParameteriv = NULL;
 PFNGLGETNAMEDFRAMEBUFFERPARAMETERIVPROC __glewGetNamedFramebufferParameteriv = NULL;
 PFNGLGETNAMEDRENDERBUFFERPARAMETERIVPROC __glewGetNamedRenderbufferParameteriv = NULL;
+PFNGLGETQUERYBUFFEROBJECTI64VPROC __glewGetQueryBufferObjecti64v = NULL;
+PFNGLGETQUERYBUFFEROBJECTIVPROC __glewGetQueryBufferObjectiv = NULL;
+PFNGLGETQUERYBUFFEROBJECTUI64VPROC __glewGetQueryBufferObjectui64v = NULL;
+PFNGLGETQUERYBUFFEROBJECTUIVPROC __glewGetQueryBufferObjectuiv = NULL;
 PFNGLGETTEXTUREIMAGEPROC __glewGetTextureImage = NULL;
 PFNGLGETTEXTURELEVELPARAMETERFVPROC __glewGetTextureLevelParameterfv = NULL;
 PFNGLGETTEXTURELEVELPARAMETERIVPROC __glewGetTextureLevelParameteriv = NULL;
@@ -2021,6 +2025,8 @@ PFNGLPOINTPARAMETERFVEXTPROC __glewPointParameterfvEXT = NULL;
 
 PFNGLPOLYGONOFFSETEXTPROC __glewPolygonOffsetEXT = NULL;
 
+PFNGLPOLYGONOFFSETCLAMPEXTPROC __glewPolygonOffsetClampEXT = NULL;
+
 PFNGLPROVOKINGVERTEXEXTPROC __glewProvokingVertexEXT = NULL;
 
 PFNGLBEGINSCENEEXTPROC __glewBeginSceneEXT = NULL;
@@ -2454,18 +2460,28 @@ PFNGLGETPATHPARAMETERIVNVPROC __glewGetPathParameterivNV = NULL;
 PFNGLGETPATHSPACINGNVPROC __glewGetPathSpacingNV = NULL;
 PFNGLGETPATHTEXGENFVNVPROC __glewGetPathTexGenfvNV = NULL;
 PFNGLGETPATHTEXGENIVNVPROC __glewGetPathTexGenivNV = NULL;
+PFNGLGETPROGRAMRESOURCEFVNVPROC __glewGetProgramResourcefvNV = NULL;
 PFNGLINTERPOLATEPATHSNVPROC __glewInterpolatePathsNV = NULL;
 PFNGLISPATHNVPROC __glewIsPathNV = NULL;
 PFNGLISPOINTINFILLPATHNVPROC __glewIsPointInFillPathNV = NULL;
 PFNGLISPOINTINSTROKEPATHNVPROC __glewIsPointInStrokePathNV = NULL;
+PFNGLMATRIXLOAD3X2FNVPROC __glewMatrixLoad3x2fNV = NULL;
+PFNGLMATRIXLOAD3X3FNVPROC __glewMatrixLoad3x3fNV = NULL;
+PFNGLMATRIXLOADTRANSPOSE3X3FNVPROC __glewMatrixLoadTranspose3x3fNV = NULL;
+PFNGLMATRIXMULT3X2FNVPROC __glewMatrixMult3x2fNV = NULL;
+PFNGLMATRIXMULT3X3FNVPROC __glewMatrixMult3x3fNV = NULL;
+PFNGLMATRIXMULTTRANSPOSE3X3FNVPROC __glewMatrixMultTranspose3x3fNV = NULL;
 PFNGLPATHCOLORGENNVPROC __glewPathColorGenNV = NULL;
 PFNGLPATHCOMMANDSNVPROC __glewPathCommandsNV = NULL;
 PFNGLPATHCOORDSNVPROC __glewPathCoordsNV = NULL;
 PFNGLPATHCOVERDEPTHFUNCNVPROC __glewPathCoverDepthFuncNV = NULL;
 PFNGLPATHDASHARRAYNVPROC __glewPathDashArrayNV = NULL;
 PFNGLPATHFOGGENNVPROC __glewPathFogGenNV = NULL;
+PFNGLPATHGLYPHINDEXARRAYNVPROC __glewPathGlyphIndexArrayNV = NULL;
+PFNGLPATHGLYPHINDEXRANGENVPROC __glewPathGlyphIndexRangeNV = NULL;
 PFNGLPATHGLYPHRANGENVPROC __glewPathGlyphRangeNV = NULL;
 PFNGLPATHGLYPHSNVPROC __glewPathGlyphsNV = NULL;
+PFNGLPATHMEMORYGLYPHINDEXARRAYNVPROC __glewPathMemoryGlyphIndexArrayNV = NULL;
 PFNGLPATHPARAMETERFNVPROC __glewPathParameterfNV = NULL;
 PFNGLPATHPARAMETERFVNVPROC __glewPathParameterfvNV = NULL;
 PFNGLPATHPARAMETERINVPROC __glewPathParameteriNV = NULL;
@@ -2477,10 +2493,15 @@ PFNGLPATHSUBCOMMANDSNVPROC __glewPathSubCommandsNV = NULL;
 PFNGLPATHSUBCOORDSNVPROC __glewPathSubCoordsNV = NULL;
 PFNGLPATHTEXGENNVPROC __glewPathTexGenNV = NULL;
 PFNGLPOINTALONGPATHNVPROC __glewPointAlongPathNV = NULL;
+PFNGLPROGRAMPATHFRAGMENTINPUTGENNVPROC __glewProgramPathFragmentInputGenNV = NULL;
 PFNGLSTENCILFILLPATHINSTANCEDNVPROC __glewStencilFillPathInstancedNV = NULL;
 PFNGLSTENCILFILLPATHNVPROC __glewStencilFillPathNV = NULL;
 PFNGLSTENCILSTROKEPATHINSTANCEDNVPROC __glewStencilStrokePathInstancedNV = NULL;
 PFNGLSTENCILSTROKEPATHNVPROC __glewStencilStrokePathNV = NULL;
+PFNGLSTENCILTHENCOVERFILLPATHINSTANCEDNVPROC __glewStencilThenCoverFillPathInstancedNV = NULL;
+PFNGLSTENCILTHENCOVERFILLPATHNVPROC __glewStencilThenCoverFillPathNV = NULL;
+PFNGLSTENCILTHENCOVERSTROKEPATHINSTANCEDNVPROC __glewStencilThenCoverStrokePathInstancedNV = NULL;
+PFNGLSTENCILTHENCOVERSTROKEPATHNVPROC __glewStencilThenCoverStrokePathNV = NULL;
 PFNGLTRANSFORMPATHNVPROC __glewTransformPathNV = NULL;
 PFNGLWEIGHTPATHSNVPROC __glewWeightPathsNV = NULL;
 
@@ -3191,6 +3212,7 @@ GLboolean __GLEW_EXT_pixel_transform = GL_FALSE;
 GLboolean __GLEW_EXT_pixel_transform_color_table = GL_FALSE;
 GLboolean __GLEW_EXT_point_parameters = GL_FALSE;
 GLboolean __GLEW_EXT_polygon_offset = GL_FALSE;
+GLboolean __GLEW_EXT_polygon_offset_clamp = GL_FALSE;
 GLboolean __GLEW_EXT_provoking_vertex = GL_FALSE;
 GLboolean __GLEW_EXT_rescale_normal = GL_FALSE;
 GLboolean __GLEW_EXT_scene_marker = GL_FALSE;
@@ -3343,6 +3365,7 @@ GLboolean __GLEW_NV_texture_shader2 = GL_FALSE;
 GLboolean __GLEW_NV_texture_shader3 = GL_FALSE;
 GLboolean __GLEW_NV_transform_feedback = GL_FALSE;
 GLboolean __GLEW_NV_transform_feedback2 = GL_FALSE;
+GLboolean __GLEW_NV_uniform_buffer_unified_memory = GL_FALSE;
 GLboolean __GLEW_NV_vdpau_interop = GL_FALSE;
 GLboolean __GLEW_NV_vertex_array_range = GL_FALSE;
 GLboolean __GLEW_NV_vertex_array_range2 = GL_FALSE;
@@ -4725,6 +4748,10 @@ static GLboolean _glewInit_GL_ARB_direct_state_access (GLEW_CONTEXT_ARG_DEF_INIT
   r = ((glGetNamedFramebufferAttachmentParameteriv = (PFNGLGETNAMEDFRAMEBUFFERATTACHMENTPARAMETERIVPROC)glewGetProcAddress((const GLubyte*)"glGetNamedFramebufferAttachmentParameteriv")) == NULL) || r;
   r = ((glGetNamedFramebufferParameteriv = (PFNGLGETNAMEDFRAMEBUFFERPARAMETERIVPROC)glewGetProcAddress((const GLubyte*)"glGetNamedFramebufferParameteriv")) == NULL) || r;
   r = ((glGetNamedRenderbufferParameteriv = (PFNGLGETNAMEDRENDERBUFFERPARAMETERIVPROC)glewGetProcAddress((const GLubyte*)"glGetNamedRenderbufferParameteriv")) == NULL) || r;
+  r = ((glGetQueryBufferObjecti64v = (PFNGLGETQUERYBUFFEROBJECTI64VPROC)glewGetProcAddress((const GLubyte*)"glGetQueryBufferObjecti64v")) == NULL) || r;
+  r = ((glGetQueryBufferObjectiv = (PFNGLGETQUERYBUFFEROBJECTIVPROC)glewGetProcAddress((const GLubyte*)"glGetQueryBufferObjectiv")) == NULL) || r;
+  r = ((glGetQueryBufferObjectui64v = (PFNGLGETQUERYBUFFEROBJECTUI64VPROC)glewGetProcAddress((const GLubyte*)"glGetQueryBufferObjectui64v")) == NULL) || r;
+  r = ((glGetQueryBufferObjectuiv = (PFNGLGETQUERYBUFFEROBJECTUIVPROC)glewGetProcAddress((const GLubyte*)"glGetQueryBufferObjectuiv")) == NULL) || r;
   r = ((glGetTextureImage = (PFNGLGETTEXTUREIMAGEPROC)glewGetProcAddress((const GLubyte*)"glGetTextureImage")) == NULL) || r;
   r = ((glGetTextureLevelParameterfv = (PFNGLGETTEXTURELEVELPARAMETERFVPROC)glewGetProcAddress((const GLubyte*)"glGetTextureLevelParameterfv")) == NULL) || r;
   r = ((glGetTextureLevelParameteriv = (PFNGLGETTEXTURELEVELPARAMETERIVPROC)glewGetProcAddress((const GLubyte*)"glGetTextureLevelParameteriv")) == NULL) || r;
@@ -7509,6 +7536,19 @@ static GLboolean _glewInit_GL_EXT_polygon_offset (GLEW_CONTEXT_ARG_DEF_INIT)
 
 #endif /* GL_EXT_polygon_offset */
 
+#ifdef GL_EXT_polygon_offset_clamp
+
+static GLboolean _glewInit_GL_EXT_polygon_offset_clamp (GLEW_CONTEXT_ARG_DEF_INIT)
+{
+  GLboolean r = GL_FALSE;
+
+  r = ((glPolygonOffsetClampEXT = (PFNGLPOLYGONOFFSETCLAMPEXTPROC)glewGetProcAddress((const GLubyte*)"glPolygonOffsetClampEXT")) == NULL) || r;
+
+  return r;
+}
+
+#endif /* GL_EXT_polygon_offset_clamp */
+
 #ifdef GL_EXT_provoking_vertex
 
 static GLboolean _glewInit_GL_EXT_provoking_vertex (GLEW_CONTEXT_ARG_DEF_INIT)
@@ -8829,18 +8869,28 @@ static GLboolean _glewInit_GL_NV_path_rendering (GLEW_CONTEXT_ARG_DEF_INIT)
   r = ((glGetPathSpacingNV = (PFNGLGETPATHSPACINGNVPROC)glewGetProcAddress((const GLubyte*)"glGetPathSpacingNV")) == NULL) || r;
   r = ((glGetPathTexGenfvNV = (PFNGLGETPATHTEXGENFVNVPROC)glewGetProcAddress((const GLubyte*)"glGetPathTexGenfvNV")) == NULL) || r;
   r = ((glGetPathTexGenivNV = (PFNGLGETPATHTEXGENIVNVPROC)glewGetProcAddress((const GLubyte*)"glGetPathTexGenivNV")) == NULL) || r;
+  r = ((glGetProgramResourcefvNV = (PFNGLGETPROGRAMRESOURCEFVNVPROC)glewGetProcAddress((const GLubyte*)"glGetProgramResourcefvNV")) == NULL) || r;
   r = ((glInterpolatePathsNV = (PFNGLINTERPOLATEPATHSNVPROC)glewGetProcAddress((const GLubyte*)"glInterpolatePathsNV")) == NULL) || r;
   r = ((glIsPathNV = (PFNGLISPATHNVPROC)glewGetProcAddress((const GLubyte*)"glIsPathNV")) == NULL) || r;
   r = ((glIsPointInFillPathNV = (PFNGLISPOINTINFILLPATHNVPROC)glewGetProcAddress((const GLubyte*)"glIsPointInFillPathNV")) == NULL) || r;
   r = ((glIsPointInStrokePathNV = (PFNGLISPOINTINSTROKEPATHNVPROC)glewGetProcAddress((const GLubyte*)"glIsPointInStrokePathNV")) == NULL) || r;
+  r = ((glMatrixLoad3x2fNV = (PFNGLMATRIXLOAD3X2FNVPROC)glewGetProcAddress((const GLubyte*)"glMatrixLoad3x2fNV")) == NULL) || r;
+  r = ((glMatrixLoad3x3fNV = (PFNGLMATRIXLOAD3X3FNVPROC)glewGetProcAddress((const GLubyte*)"glMatrixLoad3x3fNV")) == NULL) || r;
+  r = ((glMatrixLoadTranspose3x3fNV = (PFNGLMATRIXLOADTRANSPOSE3X3FNVPROC)glewGetProcAddress((const GLubyte*)"glMatrixLoadTranspose3x3fNV")) == NULL) || r;
+  r = ((glMatrixMult3x2fNV = (PFNGLMATRIXMULT3X2FNVPROC)glewGetProcAddress((const GLubyte*)"glMatrixMult3x2fNV")) == NULL) || r;
+  r = ((glMatrixMult3x3fNV = (PFNGLMATRIXMULT3X3FNVPROC)glewGetProcAddress((const GLubyte*)"glMatrixMult3x3fNV")) == NULL) || r;
+  r = ((glMatrixMultTranspose3x3fNV = (PFNGLMATRIXMULTTRANSPOSE3X3FNVPROC)glewGetProcAddress((const GLubyte*)"glMatrixMultTranspose3x3fNV")) == NULL) || r;
   r = ((glPathColorGenNV = (PFNGLPATHCOLORGENNVPROC)glewGetProcAddress((const GLubyte*)"glPathColorGenNV")) == NULL) || r;
   r = ((glPathCommandsNV = (PFNGLPATHCOMMANDSNVPROC)glewGetProcAddress((const GLubyte*)"glPathCommandsNV")) == NULL) || r;
   r = ((glPathCoordsNV = (PFNGLPATHCOORDSNVPROC)glewGetProcAddress((const GLubyte*)"glPathCoordsNV")) == NULL) || r;
   r = ((glPathCoverDepthFuncNV = (PFNGLPATHCOVERDEPTHFUNCNVPROC)glewGetProcAddress((const GLubyte*)"glPathCoverDepthFuncNV")) == NULL) || r;
   r = ((glPathDashArrayNV = (PFNGLPATHDASHARRAYNVPROC)glewGetProcAddress((const GLubyte*)"glPathDashArrayNV")) == NULL) || r;
   r = ((glPathFogGenNV = (PFNGLPATHFOGGENNVPROC)glewGetProcAddress((const GLubyte*)"glPathFogGenNV")) == NULL) || r;
+  r = ((glPathGlyphIndexArrayNV = (PFNGLPATHGLYPHINDEXARRAYNVPROC)glewGetProcAddress((const GLubyte*)"glPathGlyphIndexArrayNV")) == NULL) || r;
+  r = ((glPathGlyphIndexRangeNV = (PFNGLPATHGLYPHINDEXRANGENVPROC)glewGetProcAddress((const GLubyte*)"glPathGlyphIndexRangeNV")) == NULL) || r;
   r = ((glPathGlyphRangeNV = (PFNGLPATHGLYPHRANGENVPROC)glewGetProcAddress((const GLubyte*)"glPathGlyphRangeNV")) == NULL) || r;
   r = ((glPathGlyphsNV = (PFNGLPATHGLYPHSNVPROC)glewGetProcAddress((const GLubyte*)"glPathGlyphsNV")) == NULL) || r;
+  r = ((glPathMemoryGlyphIndexArrayNV = (PFNGLPATHMEMORYGLYPHINDEXARRAYNVPROC)glewGetProcAddress((const GLubyte*)"glPathMemoryGlyphIndexArrayNV")) == NULL) || r;
   r = ((glPathParameterfNV = (PFNGLPATHPARAMETERFNVPROC)glewGetProcAddress((const GLubyte*)"glPathParameterfNV")) == NULL) || r;
   r = ((glPathParameterfvNV = (PFNGLPATHPARAMETERFVNVPROC)glewGetProcAddress((const GLubyte*)"glPathParameterfvNV")) == NULL) || r;
   r = ((glPathParameteriNV = (PFNGLPATHPARAMETERINVPROC)glewGetProcAddress((const GLubyte*)"glPathParameteriNV")) == NULL) || r;
@@ -8852,10 +8902,15 @@ static GLboolean _glewInit_GL_NV_path_rendering (GLEW_CONTEXT_ARG_DEF_INIT)
   r = ((glPathSubCoordsNV = (PFNGLPATHSUBCOORDSNVPROC)glewGetProcAddress((const GLubyte*)"glPathSubCoordsNV")) == NULL) || r;
   r = ((glPathTexGenNV = (PFNGLPATHTEXGENNVPROC)glewGetProcAddress((const GLubyte*)"glPathTexGenNV")) == NULL) || r;
   r = ((glPointAlongPathNV = (PFNGLPOINTALONGPATHNVPROC)glewGetProcAddress((const GLubyte*)"glPointAlongPathNV")) == NULL) || r;
+  r = ((glProgramPathFragmentInputGenNV = (PFNGLPROGRAMPATHFRAGMENTINPUTGENNVPROC)glewGetProcAddress((const GLubyte*)"glProgramPathFragmentInputGenNV")) == NULL) || r;
   r = ((glStencilFillPathInstancedNV = (PFNGLSTENCILFILLPATHINSTANCEDNVPROC)glewGetProcAddress((const GLubyte*)"glStencilFillPathInstancedNV")) == NULL) || r;
   r = ((glStencilFillPathNV = (PFNGLSTENCILFILLPATHNVPROC)glewGetProcAddress((const GLubyte*)"glStencilFillPathNV")) == NULL) || r;
   r = ((glStencilStrokePathInstancedNV = (PFNGLSTENCILSTROKEPATHINSTANCEDNVPROC)glewGetProcAddress((const GLubyte*)"glStencilStrokePathInstancedNV")) == NULL) || r;
   r = ((glStencilStrokePathNV = (PFNGLSTENCILSTROKEPATHNVPROC)glewGetProcAddress((const GLubyte*)"glStencilStrokePathNV")) == NULL) || r;
+  r = ((glStencilThenCoverFillPathInstancedNV = (PFNGLSTENCILTHENCOVERFILLPATHINSTANCEDNVPROC)glewGetProcAddress((const GLubyte*)"glStencilThenCoverFillPathInstancedNV")) == NULL) || r;
+  r = ((glStencilThenCoverFillPathNV = (PFNGLSTENCILTHENCOVERFILLPATHNVPROC)glewGetProcAddress((const GLubyte*)"glStencilThenCoverFillPathNV")) == NULL) || r;
+  r = ((glStencilThenCoverStrokePathInstancedNV = (PFNGLSTENCILTHENCOVERSTROKEPATHINSTANCEDNVPROC)glewGetProcAddress((const GLubyte*)"glStencilThenCoverStrokePathInstancedNV")) == NULL) || r;
+  r = ((glStencilThenCoverStrokePathNV = (PFNGLSTENCILTHENCOVERSTROKEPATHNVPROC)glewGetProcAddress((const GLubyte*)"glStencilThenCoverStrokePathNV")) == NULL) || r;
   r = ((glTransformPathNV = (PFNGLTRANSFORMPATHNVPROC)glewGetProcAddress((const GLubyte*)"glTransformPathNV")) == NULL) || r;
   r = ((glWeightPathsNV = (PFNGLWEIGHTPATHSNVPROC)glewGetProcAddress((const GLubyte*)"glWeightPathsNV")) == NULL) || r;
 
@@ -9124,6 +9179,10 @@ static GLboolean _glewInit_GL_NV_transform_feedback2 (GLEW_CONTEXT_ARG_DEF_INIT)
 }
 
 #endif /* GL_NV_transform_feedback2 */
+
+#ifdef GL_NV_uniform_buffer_unified_memory
+
+#endif /* GL_NV_uniform_buffer_unified_memory */
 
 #ifdef GL_NV_vdpau_interop
 
@@ -11189,6 +11248,10 @@ GLenum GLEWAPIENTRY glewContextInit (GLEW_CONTEXT_ARG_DEF_LIST)
   GLEW_EXT_polygon_offset = _glewSearchExtension("GL_EXT_polygon_offset", extStart, extEnd);
   if (glewExperimental || GLEW_EXT_polygon_offset) GLEW_EXT_polygon_offset = !_glewInit_GL_EXT_polygon_offset(GLEW_CONTEXT_ARG_VAR_INIT);
 #endif /* GL_EXT_polygon_offset */
+#ifdef GL_EXT_polygon_offset_clamp
+  GLEW_EXT_polygon_offset_clamp = _glewSearchExtension("GL_EXT_polygon_offset_clamp", extStart, extEnd);
+  if (glewExperimental || GLEW_EXT_polygon_offset_clamp) GLEW_EXT_polygon_offset_clamp = !_glewInit_GL_EXT_polygon_offset_clamp(GLEW_CONTEXT_ARG_VAR_INIT);
+#endif /* GL_EXT_polygon_offset_clamp */
 #ifdef GL_EXT_provoking_vertex
   GLEW_EXT_provoking_vertex = _glewSearchExtension("GL_EXT_provoking_vertex", extStart, extEnd);
   if (glewExperimental || GLEW_EXT_provoking_vertex) GLEW_EXT_provoking_vertex = !_glewInit_GL_EXT_provoking_vertex(GLEW_CONTEXT_ARG_VAR_INIT);
@@ -11712,6 +11775,9 @@ GLenum GLEWAPIENTRY glewContextInit (GLEW_CONTEXT_ARG_DEF_LIST)
   GLEW_NV_transform_feedback2 = _glewSearchExtension("GL_NV_transform_feedback2", extStart, extEnd);
   if (glewExperimental || GLEW_NV_transform_feedback2) GLEW_NV_transform_feedback2 = !_glewInit_GL_NV_transform_feedback2(GLEW_CONTEXT_ARG_VAR_INIT);
 #endif /* GL_NV_transform_feedback2 */
+#ifdef GL_NV_uniform_buffer_unified_memory
+  GLEW_NV_uniform_buffer_unified_memory = _glewSearchExtension("GL_NV_uniform_buffer_unified_memory", extStart, extEnd);
+#endif /* GL_NV_uniform_buffer_unified_memory */
 #ifdef GL_NV_vdpau_interop
   GLEW_NV_vdpau_interop = _glewSearchExtension("GL_NV_vdpau_interop", extStart, extEnd);
   if (glewExperimental || GLEW_NV_vdpau_interop) GLEW_NV_vdpau_interop = !_glewInit_GL_NV_vdpau_interop(GLEW_CONTEXT_ARG_VAR_INIT);
@@ -16492,6 +16558,13 @@ GLboolean GLEWAPIENTRY glewIsSupported (const char* name)
           continue;
         }
 #endif
+#ifdef GL_EXT_polygon_offset_clamp
+        if (_glewStrSame3(&pos, &len, (const GLubyte*)"polygon_offset_clamp", 20))
+        {
+          ret = GLEW_EXT_polygon_offset_clamp;
+          continue;
+        }
+#endif
 #ifdef GL_EXT_provoking_vertex
         if (_glewStrSame3(&pos, &len, (const GLubyte*)"provoking_vertex", 16))
         {
@@ -17586,6 +17659,13 @@ GLboolean GLEWAPIENTRY glewIsSupported (const char* name)
         if (_glewStrSame3(&pos, &len, (const GLubyte*)"transform_feedback2", 19))
         {
           ret = GLEW_NV_transform_feedback2;
+          continue;
+        }
+#endif
+#ifdef GL_NV_uniform_buffer_unified_memory
+        if (_glewStrSame3(&pos, &len, (const GLubyte*)"uniform_buffer_unified_memory", 29))
+        {
+          ret = GLEW_NV_uniform_buffer_unified_memory;
           continue;
         }
 #endif
