@@ -31,7 +31,7 @@ all:: regalw.lib
 
 clean:: regalw.clean
 
-REGALW.LDFLAGS        := -lstdc++ -pthread -lm
+REGALW.LDFLAGS        := -lstdc++ -pthread -lm -lrt
 REGALW.LIBS           :=
 
 REGALW.SRCS           := $(REGAL.CXX)
