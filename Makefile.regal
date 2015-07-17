@@ -43,11 +43,11 @@ ifeq ($(filter nacl%,$(SYSTEM)),)
 REGAL.LDFLAGS        += -lstdc++
 endif
 
-REGAL.LDFLAGS        += -pthread -lm -lrt
+REGAL.LDFLAGS        += -pthread -lm
 REGAL.LIBS           :=
 
 ifeq ($(filter nacl%,$(SYSTEM)),)
-REGAL.LDFLAGS        += -ldl
+REGAL.LDFLAGS        += -ldl -lrt
 endif
 
 REGAL.SRCS           := $(REGAL.CXX)
