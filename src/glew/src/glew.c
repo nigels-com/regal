@@ -613,7 +613,9 @@ PFNGLBLENDFUNCIPROC __glewBlendFunci = NULL;
 PFNGLMINSAMPLESHADINGPROC __glewMinSampleShading = NULL;
 
 PFNGLGETGRAPHICSRESETSTATUSPROC __glewGetGraphicsResetStatus = NULL;
+PFNGLGETNCOMPRESSEDTEXIMAGEPROC __glewGetnCompressedTexImage = NULL;
 PFNGLGETNTEXIMAGEPROC __glewGetnTexImage = NULL;
+PFNGLGETNUNIFORMDVPROC __glewGetnUniformdv = NULL;
 
 PFNGLTBUFFERMASK3DFXPROC __glewTbufferMask3DFX = NULL;
 
@@ -2302,6 +2304,8 @@ PFNGLENDCONDITIONALRENDERNVPROC __glewEndConditionalRenderNV = NULL;
 
 PFNGLSUBPIXELPRECISIONBIASNVPROC __glewSubpixelPrecisionBiasNV = NULL;
 
+PFNGLCONSERVATIVERASTERPARAMETERFNVPROC __glewConservativeRasterParameterfNV = NULL;
+
 PFNGLCOPYIMAGESUBDATANVPROC __glewCopyImageSubDataNV = NULL;
 
 PFNGLCLEARDEPTHDNVPROC __glewClearDepthdNV = NULL;
@@ -3330,6 +3334,7 @@ GLboolean __GLEW_NV_blend_square = GL_FALSE;
 GLboolean __GLEW_NV_compute_program5 = GL_FALSE;
 GLboolean __GLEW_NV_conditional_render = GL_FALSE;
 GLboolean __GLEW_NV_conservative_raster = GL_FALSE;
+GLboolean __GLEW_NV_conservative_raster_dilate = GL_FALSE;
 GLboolean __GLEW_NV_copy_depth_to_color = GL_FALSE;
 GLboolean __GLEW_NV_copy_image = GL_FALSE;
 GLboolean __GLEW_NV_deep_texture3D = GL_FALSE;
@@ -3919,7 +3924,9 @@ static GLboolean _glewInit_GL_VERSION_4_5 (GLEW_CONTEXT_ARG_DEF_INIT)
   GLboolean r = GL_FALSE;
 
   r = ((glGetGraphicsResetStatus = (PFNGLGETGRAPHICSRESETSTATUSPROC)glewGetProcAddress((const GLubyte*)"glGetGraphicsResetStatus")) == NULL) || r;
+  r = ((glGetnCompressedTexImage = (PFNGLGETNCOMPRESSEDTEXIMAGEPROC)glewGetProcAddress((const GLubyte*)"glGetnCompressedTexImage")) == NULL) || r;
   r = ((glGetnTexImage = (PFNGLGETNTEXIMAGEPROC)glewGetProcAddress((const GLubyte*)"glGetnTexImage")) == NULL) || r;
+  r = ((glGetnUniformdv = (PFNGLGETNUNIFORMDVPROC)glewGetProcAddress((const GLubyte*)"glGetnUniformdv")) == NULL) || r;
 
   return r;
 }
@@ -7770,6 +7777,19 @@ static GLboolean _glewInit_GL_NV_conservative_raster (GLEW_CONTEXT_ARG_DEF_INIT)
 
 #endif /* GL_NV_conservative_raster */
 
+#ifdef GL_NV_conservative_raster_dilate
+
+static GLboolean _glewInit_GL_NV_conservative_raster_dilate (GLEW_CONTEXT_ARG_DEF_INIT)
+{
+  GLboolean r = GL_FALSE;
+
+  r = ((glConservativeRasterParameterfNV = (PFNGLCONSERVATIVERASTERPARAMETERFNVPROC)glewGetProcAddress((const GLubyte*)"glConservativeRasterParameterfNV")) == NULL) || r;
+
+  return r;
+}
+
+#endif /* GL_NV_conservative_raster_dilate */
+
 #ifdef GL_NV_copy_image
 
 static GLboolean _glewInit_GL_NV_copy_image (GLEW_CONTEXT_ARG_DEF_INIT)
@@ -10584,6 +10604,10 @@ GLenum GLEWAPIENTRY glewContextInit (GLEW_CONTEXT_ARG_DEF_LIST)
   GLEW_NV_conservative_raster = _glewSearchExtension("GL_NV_conservative_raster", extStart, extEnd);
   if (glewExperimental || GLEW_NV_conservative_raster) GLEW_NV_conservative_raster = !_glewInit_GL_NV_conservative_raster(GLEW_CONTEXT_ARG_VAR_INIT);
 #endif /* GL_NV_conservative_raster */
+#ifdef GL_NV_conservative_raster_dilate
+  GLEW_NV_conservative_raster_dilate = _glewSearchExtension("GL_NV_conservative_raster_dilate", extStart, extEnd);
+  if (glewExperimental || GLEW_NV_conservative_raster_dilate) GLEW_NV_conservative_raster_dilate = !_glewInit_GL_NV_conservative_raster_dilate(GLEW_CONTEXT_ARG_VAR_INIT);
+#endif /* GL_NV_conservative_raster_dilate */
 #ifdef GL_NV_copy_depth_to_color
   GLEW_NV_copy_depth_to_color = _glewSearchExtension("GL_NV_copy_depth_to_color", extStart, extEnd);
 #endif /* GL_NV_copy_depth_to_color */
@@ -16119,6 +16143,13 @@ GLboolean GLEWAPIENTRY glewIsSupported (const char* name)
         if (_glewStrSame3(&pos, &len, (const GLubyte*)"conservative_raster", 19))
         {
           ret = GLEW_NV_conservative_raster;
+          continue;
+        }
+#endif
+#ifdef GL_NV_conservative_raster_dilate
+        if (_glewStrSame3(&pos, &len, (const GLubyte*)"conservative_raster_dilate", 26))
+        {
+          ret = GLEW_NV_conservative_raster_dilate;
           continue;
         }
 #endif

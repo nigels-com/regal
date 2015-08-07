@@ -569,7 +569,9 @@ static void _glewInfo_GL_VERSION_4_5 (void)
   glewPrintExt("GL_VERSION_4_5", GLEW_VERSION_4_5, GLEW_VERSION_4_5, GLEW_VERSION_4_5);
 
   glewInfoFunc("glGetGraphicsResetStatus", glGetGraphicsResetStatus == NULL);
+  glewInfoFunc("glGetnCompressedTexImage", glGetnCompressedTexImage == NULL);
   glewInfoFunc("glGetnTexImage", glGetnTexImage == NULL);
+  glewInfoFunc("glGetnUniformdv", glGetnUniformdv == NULL);
 }
 
 #endif /* GL_VERSION_4_5 */
@@ -5763,6 +5765,17 @@ static void _glewInfo_GL_NV_conservative_raster (void)
 
 #endif /* GL_NV_conservative_raster */
 
+#ifdef GL_NV_conservative_raster_dilate
+
+static void _glewInfo_GL_NV_conservative_raster_dilate (void)
+{
+  glewPrintExt("GL_NV_conservative_raster_dilate", GLEW_NV_conservative_raster_dilate, glewIsSupported("GL_NV_conservative_raster_dilate"), glewGetExtension("GL_NV_conservative_raster_dilate"));
+
+  glewInfoFunc("glConservativeRasterParameterfNV", glConservativeRasterParameterfNV == NULL);
+}
+
+#endif /* GL_NV_conservative_raster_dilate */
+
 #ifdef GL_NV_copy_depth_to_color
 
 static void _glewInfo_GL_NV_copy_depth_to_color (void)
@@ -10486,6 +10499,9 @@ static void glewInfo (void)
 #ifdef GL_NV_conservative_raster
   _glewInfo_GL_NV_conservative_raster();
 #endif /* GL_NV_conservative_raster */
+#ifdef GL_NV_conservative_raster_dilate
+  _glewInfo_GL_NV_conservative_raster_dilate();
+#endif /* GL_NV_conservative_raster_dilate */
 #ifdef GL_NV_copy_depth_to_color
   _glewInfo_GL_NV_copy_depth_to_color();
 #endif /* GL_NV_copy_depth_to_color */
@@ -11555,10 +11571,10 @@ GLboolean glewCreateContext (struct createParams* params)
     int contextAttrs[20];
     int i;
 
-    extern GLenum GLEWAPIENTRY wglewContextInit();
     wglewContextInit();
 
-    if (!wglewGetExtension("WGL_ARB_create_context_profile"))
+    /* Intel HD 3000 has WGL_ARB_create_context, but not WGL_ARB_create_context_profile */
+    if (!wglewGetExtension("WGL_ARB_create_context"))
       return GL_TRUE;
 
     i = 0;
@@ -11730,7 +11746,7 @@ GLboolean glewCreateContext (struct createParams *params)
 
     glxewContextInit();
 
-    if (!glxewGetExtension("GLX_ARB_create_context_profile"))
+    if (!glxewGetExtension("GLX_ARB_create_context"))
       return GL_TRUE;
 
     if (glXQueryContext(dpy, oldCtx, GLX_FBCONFIG_ID, &FBConfigAttrs[1]))
