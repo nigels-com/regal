@@ -69,14 +69,12 @@ ifneq ($(STRIP),)
 	$(LOG_STRIP)$(STRIP) -x $@
 endif
 
-ifneq ($(NACL_ARCH),arm)
 test: bin/$(SYSTEM)/regaltest$(BIN_EXTENSION)
 	@echo Running tests: $^
 ifeq ($(filter nacl%,$(SYSTEM)),)
 	$^
 else
 	"$(NACL_SDK_ROOT)/tools/sel_ldr.py" $^
-endif
 endif
 
 endif

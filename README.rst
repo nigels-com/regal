@@ -420,6 +420,7 @@ Regal code, API database and generators are `BSD <http://opensource.org/licenses
   Copyright (c) 2012 Scott Nations
   Copyright (c) 2012 Mathias Schott
   Copyright (c) 2012 Nigel Stewart
+  Copyright (c) 2015 Google Inc.
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without modification,

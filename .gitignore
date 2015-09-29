@@ -1,6 +1,6 @@
-lib
-tmp
-bin
+/lib
+/tmp
+/bin
 depends
 built
 build
@@ -19,6 +19,7 @@ project.xcworkspace
 *.vcxproj.*
 *.sdf
 *.swp
+*.opensdf
 j
 j0
 j1
@@ -32,12 +33,15 @@ testing/*/*.so
 testing/*/*.so.1
 testing/*/*.dylib
 testing/*/gold
-examples/nacl/lib64
-examples/nacl/lib32
-examples/nacl/*.nexe
-examples/nacl/*.nmf
-build/ppapi/vs2010/Regal/win
-build/win32/vs2010/Regal/Debug
-build/win32/vs2010/Regal/Release
-build/win32/vs2010/Regal/ipch
-*.opensdf
+/examples/nacl/lib64
+/examples/nacl/lib32
+/examples/nacl/*.nexe
+/examples/nacl/*.nmf
+/build/ppapi/vs2010/Regal/win
+/build/win32/vs2010/Regal/Debug
+/build/win32/vs2010/Regal/Release
+/build/win32/vs2010/Regal/ipch
+
+# Downloaded by scripts/travis-install.sh
+/nacl_sdk
+/nacl_sdk.zip
