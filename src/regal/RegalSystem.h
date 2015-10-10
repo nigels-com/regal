@@ -41,7 +41,26 @@
 #ifndef __REGAL_SYSTEM_H__
 #define __REGAL_SYSTEM_H__
 
-#if defined(_WIN32)
+#if REGAL_OSMESA
+# ifndef REGAL_SYS_ES1
+#  define REGAL_SYS_ES1 0
+# endif
+# ifndef REGAL_SYS_ES2
+#  define REGAL_SYS_ES2 0
+# endif
+# ifndef REGAL_SYS_GL
+#  define REGAL_SYS_GL 1
+# endif
+#  ifndef REGAL_SYS_WGL
+#   define REGAL_SYS_WGL 0
+#  endif
+#  ifndef REGAL_SYS_GLX
+#   define REGAL_SYS_GLX 0
+#  endif
+#  ifndef REGAL_SYS_EGL
+#   define REGAL_SYS_EGL 0
+#  endif
+# elif defined(_WIN32)
 # if defined(PPAPI)
 #  ifndef REGAL_SYS_PPAPI
 #   define REGAL_SYS_PPAPI 1
