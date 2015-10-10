@@ -415,12 +415,12 @@ Regal code, API database and generators are `BSD <http://opensource.org/licenses
 
 ::
 
-  Copyright (c) 2011-2012 NVIDIA Corporation
-  Copyright (c) 2011-2012 Cass Everitt
-  Copyright (c) 2012 Scott Nations
+  Copyright (c) 2011-2014 NVIDIA Corporation
+  Copyright (c) 2012-2015 Google Inc.
+  Copyright (c) 2012-2015 Nigel Stewart
+  Copyright (c) 2012-2014 Scott Nations
+  Copyright (c) 2011-2013 Cass Everitt
   Copyright (c) 2012 Mathias Schott
-  Copyright (c) 2012 Nigel Stewart
-  Copyright (c) 2015 Google Inc.
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without modification,
