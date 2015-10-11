@@ -19,7 +19,6 @@ formulae = {
   'bindtexture' : {
     'entries' : [ 'glBindTexture(EXT|)' ],
     'pre' : [
-      '#if REGAL_HTTP',
       'if( ${arg1} != 0 ) {',
       '  HttpTextureInfo & hti = _context->http.texture[ ${arg1} ];',
       '  RegalAssert( hti.name == 0 || hti.name == ${arg1} );',
@@ -28,13 +27,11 @@ formulae = {
       '    hti.target = ${arg0};',
       '  }',
       '}',
-      '#endif',
     ],
   },
   'bindmultitexture' : {
     'entries' : [ 'glBindMultiTextureEXT' ],
     'pre' : [
-      '#if REGAL_HTTP',
       'if( ${arg2} != 0 ) {',
       '  HttpTextureInfo & hti = _context->http.texture[ ${arg2} ];',
       '  RegalAssert( hti.name == 0 || hti.name == ${arg2} );',
@@ -43,13 +40,11 @@ formulae = {
       '    hti.target = ${arg1};',
       '  }',
       '}',
-      '#endif',
     ],
   },
   'bindtextures' : {
     'entries' : [ 'glBindTextures' ],
     'pre' : [
-      '#if REGAL_HTTP',
       'if( ${arg2} != NULL ) {',
       '  for( int i = 0; i < ${arg1}; i++ ) {',
       '    if( ${arg2}[i] != 0 ) {',
@@ -62,54 +57,43 @@ formulae = {
       '    }',
       '  }',
       '}',
-      '#endif',
     ],
   },
 
   'deletetextures' : {
     'entries' : [ 'glDeleteTextures(EXT|)' ],
     'pre' : [
-      '#if REGAL_HTTP',
       'for( int i = 0; i < ${arg0}; i++ ) {',
       '  _context->http.texture.erase( ${arg1}[i] );',
       '}',
-      '#endif',
     ],
   },
 
   'createshader' : {
     'entries' : [ 'glCreateShader(ObjectARB|)' ],
     'post' : [
-      '#if REGAL_HTTP',
       '_context->http.shader.insert( ret );',
-      '#endif',
     ],
   },
 
   'deleteshader' : {
     'entries' : [ 'glDeleteShader(ObjectARB|)' ],
     'post' : [
-      '#if REGAL_HTTP',
       '_context->http.shader.erase( ${arg0} );',
-      '#endif',
     ],
   },
 
   'createprogram' : {
     'entries' : [ 'glCreateProgram(ObjectARB|)' ],
     'post' : [
-      '#if REGAL_HTTP',
       '_context->http.program.insert( ret );',
-      '#endif',
     ],
   },
 
   'deleteprogram' : {
     'entries' : [ 'glDeleteProgram(ObjectARB|)' ],
     'post' : [
-      '#if REGAL_HTTP',
       '_context->http.program.erase( ${arg0} );',
-      '#endif',
     ],
   },
 
@@ -117,54 +101,43 @@ formulae = {
   'bindfbo' : {
     'entries' : [ 'glBindFramebuffer(ARB|)' ],
     'pre' : [
-      '#if REGAL_HTTP',
       '_context->http.fbo[ ${arg1} ] = HttpFboInfo( ${arg1} );',
       '_context->http.count.fbo++;',
       'if( _context->http.runState == RS_NextFbo ) {',
       '  _context->http.runState = RS_Pause;',
       '}',
-      '#endif',
     ],
     'post' : [
-      '#if REGAL_HTTP',
       '_context->http.count.lastFbo = _context->http.count.call;',
-      '#endif',
     ],
   },
 
   'deletefbos' : {
     'entries' : [ 'glDeleteFramebufferss(EXT|)' ],
     'pre' : [
-      '#if REGAL_HTTP',
       'for( int i = 0; i < ${arg0}; i++ ) {',
       '  _context->http.fbo.erase( ${arg1}[i] );',
       '}',
-      '#endif',
     ],
   },
 
   'pushdebuggroup' : {
     'entries' : [ 'glPushDebugGroup', 'glPushGroupMarkerEXT' ],
     'pre' : [
-      '#if REGAL_HTTP',
       '_context->http.count.group++;',
       'if( _context->http.runState == RS_NextGroup ) {',
       '  _context->http.runState = RS_Pause;',
       '}',
       '_context->http.debugGroupStackDepth++;',
-      '#endif',
     ],
     'post' : [
-      '#if REGAL_HTTP',
       '_context->http.count.lastGroup = _context->http.count.call;',
-      '#endif',
     ],
   },
 
   'popdebuggroup' : {
     'entries' : [ 'glPopDebugGroup', 'glPopGroupMarkerEXT' ],
     'post' : [
-      '#if REGAL_HTTP',
       'DispatchHttpState &h = _context->http;',
       'if( h.runState == RS_StepOutOfGroup || h.runState == RS_NextGroup ) {',
       '  h.runState = RS_Pause;',
@@ -173,59 +146,47 @@ formulae = {
       '  h.runState = RS_Pause;',
       '}',
       'h.debugGroupStackDepth--;',
-      '#endif',
     ],
   },
 
   'draw' : {
     'entries' : [ 'gl(Multi|)Draw(Arrays|Elements).*', ],
     'pre' : [
-      '#if REGAL_HTTP',
       '_context->http.count.draw++;',
       'if( _context->http.runState == RS_NextDraw ) {',
       '  _context->http.runState = RS_Pause;',
       '}',
-      '#endif',
     ],
     'post' : [
-      '#if REGAL_HTTP',
       '_context->http.count.lastDraw = _context->http.count.call;',
-      '#endif',
     ],
   },
 
   'begin' : {
     'entries' : [ 'glBegin' ],
     'pre' : [
-      '#if REGAL_HTTP',
       '_context->http.count.draw++;',
       '_context->http.inBeginEnd++;',
       'if( _context->http.runState == RS_NextDraw ) {',
       '  _context->http.runState = RS_Pause;',
       '}',
-      '#endif',
     ],
     'post' : [
-      '#if REGAL_HTTP',
       '_context->http.count.lastDraw = _context->http.count.call;',
-      '#endif',
     ],
   },
 
   'end' : {
     'entries' : [ 'glEnd' ],
     'post' : [
-      '#if REGAL_HTTP',
       '_context->http.inBeginEnd--;',
       '_context->http.YieldToHttpServer( _context, false /*second call, don\'t update log */ );',
-      '#endif',
     ],
   },
 
   'swap' : {
     'entries' : [ '(glX|wgl|egl)SwapBuffers', 'CGLFlushDrawable' ],
     'pre' : [
-      '#if REGAL_HTTP',
       '_context->http.count.frame++;',
       'switch( _context->http.runState ) {',
       '   case RS_Run:',
@@ -233,12 +194,9 @@ formulae = {
       '   default:',
       '    _context->http.runState = RS_Pause;',
       '}',
-      '#endif',
     ],
     'post' : [
-      '#if REGAL_HTTP',
       '_context->http.count.lastFrame = _context->http.count.call;',
-      '#endif',
     ],
   },
 
@@ -356,16 +314,12 @@ def generateDispatchHttp(apis, args):
         for i in generated['pre']:
           code += '      %s\n' % i
 
-      code += '#if REGAL_HTTP\n'
       code += '      if( _context->http.runState == RS_Next ) {\n'
       code += '        _context->http.runState = RS_Pause;\n'
       code += '      }\n'
       code += '      _context->http.YieldToHttpServer( _context );\n'
-      code += '#endif\n'
 
       code += '    }\n'
-
-      code += '#if REGAL_HTTP\n'
 
       if function.needsContext:
         code += '    DispatchTableGL *_next = _context ? _context->dispatcher.http.next() : NULL;\n'
@@ -379,9 +333,6 @@ def generateDispatchHttp(apis, args):
       if not typeIsVoid(rType):
         code += 'ret = '
       code += '_next->call(&_next->%s)(%s);\n' % ( name, callParams )
-
-      code += '#endif\n'
-
 
       if generated and 'post' in generated:
         code += '    if( _context ) {\n'
