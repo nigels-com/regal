@@ -224,6 +224,8 @@ ContextInfo::init(const RegalContext &context)
     core = flags & GL_CONTEXT_CORE_PROFILE_BIT ? GL_TRUE : GL_FALSE;
   }
 
+  Info("OpenGL context   : ", core ? "core" : (es1 ? "ES1" : (es2 ? "ES2" : "compatible")));
+
   compat = !core && !es1 && !es2 && !webgl;
 
   if (REGAL_FORCE_CORE_PROFILE || Config::forceCoreProfile)
