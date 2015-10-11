@@ -8,64 +8,6 @@ from Api import StateType, State
 
 wgl = Api()
 
-VOID = Typedef('VOID','void')
-
-PVOID = Typedef('PVOID','void *')
-PVOID.default = '0'
-
-HANDLE = Typedef('HANDLE','PVOID')
-HANDLE.default = '0'
-
-LPCSTR = Typedef('LPCSTR','const char *')
-LPCSTR.default = '0'
-
-INT32 = Typedef('INT32','signed int')
-INT32.default = '0'
-
-INT64 = Typedef('INT64','signed __int64')
-INT64.default = '0'
-
-LPVOID = Typedef('LPVOID','void *')
-LPVOID.default = '0'
-
-BOOL = Typedef('BOOL','int')
-BOOL.default = '0'
-
-DWORD = Typedef('DWORD','unsigned long')
-DWORD.default = '0'
-
-FLOAT = Typedef('FLOAT','float')
-FLOAT.default = '0'
-
-INT = Typedef('INT','int')
-INT.default = '0'
-
-UINT = Typedef('UINT','unsigned int')
-UINT.default = '0'
-
-USHORT = Typedef('USHORT','unsigned short')
-USHORT.default = '0'
-
-PROC = Typedef('PROC','void *')
-PROC.default = 'NULL'
-
-COLORREF = Typedef('COLORREF','DWORD')
-COLORREF.default = '0'
-
-LONG = Typedef('LONG','long')
-LONG.default = '0'
-
-ULONG_PTR = Typedef('ULONG_PTR','unsigned long *')
-ULONG_PTR.default = 'NULL'
-
-HDC = Typedef('HDC','HANDLE')
-HDC.default = '0'
-HDC.regal = False
-
-HGLRC = Typedef('HGLRC','HANDLE')
-HGLRC.default = '0'
-HGLRC.regal = False
-
 GLYPHMETRICSFLOAT = Typedef('GLYPHMETRICSFLOAT','struct _GLYPHMETRICSFLOAT')
 
 LPGLYPHMETRICSFLOAT = Typedef('LPGLYPHMETRICSFLOAT','GLYPHMETRICSFLOAT *')
@@ -96,25 +38,6 @@ HVIDEOOUTPUTDEVICENV = Typedef('HVIDEOOUTPUTDEVICENV','struct HVIDEOOUTPUTDEVICE
 
 PGPU_DEVICE = Typedef('PGPU_DEVICE','struct GPU_DEVICE *')
 
-wgl.add(VOID)
-wgl.add(PVOID)
-wgl.add(HANDLE)
-wgl.add(LPCSTR)
-wgl.add(INT32)
-wgl.add(INT64)
-wgl.add(LPVOID)
-wgl.add(BOOL)
-wgl.add(DWORD)
-wgl.add(FLOAT)
-wgl.add(INT)
-wgl.add(UINT)
-wgl.add(USHORT)
-wgl.add(PROC)
-wgl.add(COLORREF)
-wgl.add(LONG)
-wgl.add(ULONG_PTR)
-wgl.add(HDC)
-wgl.add(HGLRC)
 wgl.add(GLYPHMETRICSFLOAT)
 wgl.add(LPGLYPHMETRICSFLOAT)
 wgl.add(LAYERPLANEDESCRIPTOR)

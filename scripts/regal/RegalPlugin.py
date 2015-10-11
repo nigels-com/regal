@@ -74,6 +74,9 @@ def generatePluginSource(apis, args):
   code = ''
   for api in apis:
 
+    if len(api.functions)==0:
+      continue
+
     tmp = []
     for function in api.functions:
 
@@ -123,6 +126,10 @@ def generatePluginSource(apis, args):
   code2 = ''
   size = {}
   for i in apis:
+
+    if len(i.functions)==0:
+      continue
+
     tmp = []
 
     names = []
@@ -153,6 +160,10 @@ def generatePluginSource(apis, args):
 '''
 
   for i in apis:
+
+    if len(i.functions)==0:
+      continue
+
     tmp =  '    res = (const char **) std::bsearch(&name, %s, %d, sizeof(const char *), NameCmp);\n'%('lookup_%s_Name'%i.name,size[i.name]-1)
     tmp += '    if (res) return const_cast<void *>(%s[(size_t) (res - %s)]);\n'%('lookup_%s_Value'%i.name,'lookup_%s_Name'%i.name)
     if i.name in cond:

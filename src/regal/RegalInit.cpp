@@ -69,7 +69,7 @@ namespace Json { struct Output : public ::boost::print::json::output<std::string
 
 static ::REGAL_NAMESPACE_INTERNAL::Init *_init = NULL;
 
-#if !defined(REGAL_NAMESPACE) && REGAL_SYS_WGL
+#if !defined(REGAL_NAMESPACE) && REGAL_SYS_WIN32
 // Phony advapi32.dll, gdi32.dll and user32.dll dependencies for
 // closely matching opengl32.dll
 
@@ -93,7 +93,7 @@ Init::Init()
 {
   atexit(atExit);
 
-#if !defined(REGAL_NAMESPACE) && REGAL_SYS_WGL
+#if !defined(REGAL_NAMESPACE) && REGAL_SYS_WIN32
   // Check our phony advapi32.dll, gdi32.dll and user32.dll dependencies
   // to prevent them being optimized out of a release-mode binary.
   // NOTE - these function pointers should _not_ be called, ever!
@@ -292,7 +292,7 @@ Init::setContext(RegalContext *context)
 // TLS Stuff
 //
 
-#if REGAL_SYS_WGL
+#if REGAL_SYS_WIN32
 extern "C" { DWORD __stdcall GetCurrentThreadId(void); }
 #endif
 
@@ -302,7 +302,7 @@ namespace Thread
 #if REGAL_NO_TLS
 ThreadLocal ThreadLocal::_instance;
 #else
-  #if REGAL_SYS_WGL
+  #if REGAL_SYS_WIN32
     #if REGAL_WIN_TLS
       DWORD ThreadLocal::_instanceIndex(DWORD(~0));
     #else
@@ -318,7 +318,7 @@ struct ThreadLocalInit
   ThreadLocalInit()
   {
     #if !REGAL_NO_TLS
-      #if REGAL_SYS_WGL
+      #if REGAL_SYS_WIN32
         #if REGAL_WIN_TLS
           ThreadLocal::_instanceIndex = TlsAlloc();
         #endif
@@ -330,7 +330,7 @@ struct ThreadLocalInit
   ~ThreadLocalInit()
   {
     #if !REGAL_NO_TLS
-      #if REGAL_SYS_WGL
+      #if REGAL_SYS_WIN32
         #if REGAL_WIN_TLS
           TlsFree(ThreadLocal::_instanceIndex);
         #endif

@@ -43,7 +43,7 @@ REGAL_GLOBAL_BEGIN
 
 // Windows TLS API
 
-#if REGAL_SYS_WGL && REGAL_WIN_TLS
+#if REGAL_SYS_WIN32 && REGAL_WIN_TLS
 extern "C" { DWORD __stdcall TlsAlloc    (void);          }
 extern "C" { int   __stdcall TlsFree     (DWORD);         }
 extern "C" { void* __stdcall TlsGetValue (DWORD);         }
@@ -52,7 +52,7 @@ extern "C" { int   __stdcall TlsSetValue (DWORD, void *); }
 
 // Windows process and thread ID
 
-#if REGAL_SYS_WGL
+#if REGAL_SYS_WIN32
 extern "C" { DWORD __stdcall GetCurrentProcessId (void);          }
 extern "C" { DWORD __stdcall GetCurrentThreadId  (void);          }
 #endif
@@ -74,7 +74,7 @@ namespace Thread
 
 #if REGAL_NO_TLS
 typedef int Thread;
-#elif REGAL_SYS_WGL
+#elif REGAL_SYS_WIN32
 typedef DWORD Thread;
 #else
 typedef pthread_t Thread;
@@ -88,7 +88,7 @@ inline Thread Self()
 {
 #if REGAL_NO_TLS
   return 1;
-#elif REGAL_SYS_WGL
+#elif REGAL_SYS_WIN32
   return GetCurrentThreadId();
 #else
   return pthread_self();
@@ -117,7 +117,7 @@ struct ThreadLocal
   #if REGAL_NO_TLS
   static ThreadLocal _instance;
   #else
-    #if REGAL_SYS_WGL
+    #if REGAL_SYS_WIN32
       #if REGAL_WIN_TLS
         static DWORD _instanceIndex;
       #else
@@ -134,7 +134,7 @@ struct ThreadLocal
   {
     #if REGAL_NO_TLS
       return _instance;
-    #elif REGAL_SYS_WGL
+    #elif REGAL_SYS_WIN32
       #if REGAL_WIN_TLS
         ThreadLocal *i = static_cast<ThreadLocal *>(TlsGetValue(_instanceIndex));
         if (!i)
@@ -178,7 +178,7 @@ inline RegalContext *CurrentContext()
 
 inline std::size_t procId()
 {
-#if REGAL_SYS_WGL
+#if REGAL_SYS_WIN32
   return static_cast<std::size_t>(GetCurrentProcessId());
 #elif REGAL_SYS_OSX || REGAL_SYS_OSX || REGAL_SYS_IOS || REGAL_SYS_ANDROID || REGAL_SYS_GLX
   return (std::size_t) getpid();
@@ -194,7 +194,7 @@ inline std::size_t procId()
 
 inline std::size_t threadId()
 {
-#if REGAL_SYS_WGL
+#if REGAL_SYS_WIN32
   return static_cast<std::size_t>(GetCurrentThreadId());
 #elif REGAL_SYS_OSX || REGAL_SYS_OSX || REGAL_SYS_IOS || REGAL_SYS_ANDROID || REGAL_SYS_GLX
 

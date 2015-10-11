@@ -4,7 +4,7 @@ from string import Template, upper, replace
 
 from ApiUtil import outputCode
 
-regalSys = '''#if REGAL_OSMESA
+regalSys = '''#if REGAL_SYS_OSMESA
 # ifndef REGAL_SYS_ES1
 #  define REGAL_SYS_ES1 0
 # endif
@@ -23,6 +23,11 @@ regalSys = '''#if REGAL_OSMESA
 #  ifndef REGAL_SYS_EGL
 #   define REGAL_SYS_EGL 0
 #  endif
+# if defined(_WIN32)
+#  ifndef REGAL_SYS_WIN32
+#   define REGAL_SYS_WIN32 1
+#  endif
+# endif
 # elif defined(_WIN32)
 # if defined(PPAPI)
 #  ifndef REGAL_SYS_PPAPI

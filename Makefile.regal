@@ -16,7 +16,7 @@ include build/regal.inc
 #
 
 export:
-	python scripts/Export.py --api gl 4.5 --api wgl 4.5 --api glx 4.5 --api cgl 1.4 --api egl 1.0 --outdir .
+	python scripts/Export.py --api gl 4.5 --api win32 1 --api wgl 4.5 --api glx 4.5 --api cgl 1.4 --api egl 1.0 --outdir .
 
 # Shared library target not currently supported for NaCL or emscripten
 

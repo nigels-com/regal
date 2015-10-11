@@ -54,6 +54,9 @@ def generateLookupSource(apis, args):
 
   for i in apis:
 
+    if len(i.functions)==0:
+      continue
+
     code = []
 
     regalOnly = set( [ j.name for j in i.functions if getattr(j,'regalOnly',False)==True ] )
@@ -167,6 +170,9 @@ def generateLookupHeader(apis, args, offsetLookup = True, ifFunction = lambda i 
   ret = []
 
   for i in apis:
+
+    if len(i.functions)==0:
+      continue
 
     code = []
 

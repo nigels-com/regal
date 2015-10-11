@@ -330,7 +330,7 @@ namespace Logging {
     // trying to create a RegalContext and triggering more
     // (recursive) logging.
 
-#if !REGAL_SYS_WGL && !REGAL_NO_TLS
+#if !REGAL_SYS_WIN32 && !REGAL_NO_TLS
     if (!Thread::ThreadLocal::_instanceKey || !pthread_getspecific(Thread::ThreadLocal::_instanceKey))
       return 0;
 #endif
@@ -583,7 +583,7 @@ namespace Logging {
 
       RegalContext *rCtx = NULL;
 
-#if !REGAL_SYS_WGL && !REGAL_NO_TLS
+#if !REGAL_SYS_WIN32 && !REGAL_NO_TLS
       if (Thread::ThreadLocal::_instanceKey && pthread_getspecific(Thread::ThreadLocal::_instanceKey))
         rCtx = REGAL_GET_CONTEXT();
 #else
@@ -595,7 +595,7 @@ namespace Logging {
         rCtx->logCallback(GL_LOG_INFO_REGAL, (GLsizei) m.length(), m.c_str(), reinterpret_cast<void *>(rCtx->sysCtx));
 #endif
 
-#if REGAL_SYS_WGL
+#if REGAL_SYS_WIN32
       OutputDebugStringA(m.c_str());
 #elif REGAL_SYS_ANDROID
       if (!logOutput)

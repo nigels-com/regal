@@ -499,7 +499,7 @@ def apiTypedefCode( apis, args ):
     if api.name in cond:
       code += '#if %s\n' % cond[api.name]
 
-    if api.name == 'wgl':
+    if api.name == 'win32' or api.name == 'wgl':
       code += '#ifdef  REGAL_SYS_WGL_DECLARE_WGL\n'
       code += '#ifndef _WINDEF_\n'
 
@@ -521,6 +521,10 @@ def apiTypedefCode( apis, args ):
           if i in mapping:
             type[mapping[i]] = printTypedef( typedef.name, typedef.type[i] )
         code += '\n'.join(wrapIf(type,None)) + '\n'
+
+    if api.name == 'win32':
+      code += '#endif\n'
+      code += '#endif // REGAL_SYS_WGL_DECLARE_WGL\n'
 
     if api.name in cond:
       code += '#endif // %s\n' % cond[api.name]
@@ -837,6 +841,7 @@ def generateDefFile(apis, args, additional_exports):
   code1 = []
   code2 = []
   code3 = []
+  code4 = []
 
   for i in apis:
     if i.name=='wgl' or i.name=='gl':
@@ -846,9 +851,14 @@ def generateDefFile(apis, args, additional_exports):
     if i.name=='cgl' or i.name=='gl':
       for j in i.functions:
         code3.append('_%s'%j.name)
+    if i.name=='gl':
+      for j in i.functions:
+        code4.append('  %s'%j.name)
+
   code1.sort()
   code2.sort()
   code3.sort()
+  code4.sort()
 
   code1.insert( 0, '  SetPixelFormat' )
   code2.insert( 0, '  SetPixelFormat' )
@@ -858,7 +868,9 @@ def generateDefFile(apis, args, additional_exports):
   code1 += ['  %s' % export for export in additional_exports]
   code2 += ['  %s' % export for export in additional_exports]
   code3 += ['_%s' % export for export in additional_exports]
+  code4 += ['  %s' % export for export in additional_exports]
 
   outputCode( '%s/Regal.def'  % args.srcdir, 'EXPORTS\n' + '\n'.join(code1))
   outputCode( '%s/Regalm.def' % args.srcdir, 'EXPORTS\n' + '\n'.join(code2))
   outputCode( '%s/export_list_mac.txt' % args.srcdir, '# File: export_list\n' + '\n'.join(code3))
+  outputCode( '%s/Regalo.def'  % args.srcdir, 'EXPORTS\n' + '\n'.join(code4))
