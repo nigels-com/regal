@@ -9192,7 +9192,7 @@ extern "C" {
     if (_context->marker)
       _context->marker->InsertEventMarker(*_context, _message);
     RegalAssert(_context->info);
-    if (true || _context->info->gl_amd_debug_output)
+    if (_context->info->gl_amd_debug_output)
     {
         DispatchTableGL *_next = &_context->dispatcher.front();
         RegalAssert(_next);
@@ -11217,7 +11217,7 @@ extern "C" {
     if (_context->marker)
       _context->marker->InsertEventMarker(*_context, _message);
     RegalAssert(_context->info);
-    if (true || _context->info->gl_arb_debug_output)
+    if (_context->info->gl_arb_debug_output)
     {
         DispatchTableGL *_next = &_context->dispatcher.front();
         RegalAssert(_next);
@@ -22724,7 +22724,7 @@ extern "C" {
     if (_context->marker)
       _context->marker->InsertEventMarker(*_context, _message);
     RegalAssert(_context->info);
-    if (true || _context->info->gl_ext_debug_marker)
+    if (_context->info->gl_ext_debug_marker)
     {
         DispatchTableGL *_next = &_context->dispatcher.front();
         RegalAssert(_next);
@@ -22745,7 +22745,7 @@ extern "C" {
     App("glPopGroupMarkerEXT","()");
     if (!_context) return;
     RegalAssert(_context->info);
-    if (true || _context->info->gl_ext_debug_marker)
+    if (_context->info->gl_ext_debug_marker)
     {
         DispatchTableGL *_next = &_context->dispatcher.front();
         RegalAssert(_next);
@@ -22766,7 +22766,7 @@ extern "C" {
     App("glPushGroupMarkerEXT","(", length, ", ", boost::print::quote(marker,'"'), ")");
     if (!_context) return;
     RegalAssert(_context->info);
-    if (true || _context->info->gl_ext_debug_marker)
+    if (_context->info->gl_ext_debug_marker)
     {
         DispatchTableGL *_next = &_context->dispatcher.front();
         RegalAssert(_next);
@@ -29869,7 +29869,7 @@ extern "C" {
     if (_context->marker)
       _context->marker->InsertEventMarker(*_context, _message);
     RegalAssert(_context->info);
-    if (true || _context->info->gl_gremedy_string_marker)
+    if (_context->info->gl_gremedy_string_marker)
     {
         DispatchTableGL *_next = &_context->dispatcher.front();
         RegalAssert(_next);
@@ -30346,7 +30346,7 @@ extern "C" {
     if (_context->marker)
       _context->marker->InsertEventMarker(*_context, _message);
     RegalAssert(_context->info);
-    if (true || _context->info->gl_khr_debug)
+    if (_context->info->gl_khr_debug)
     {
         DispatchTableGL *_next = &_context->dispatcher.front();
         RegalAssert(_next);
@@ -30436,7 +30436,7 @@ extern "C" {
     App("glPopDebugGroup","()");
     if (!_context) return;
     RegalAssert(_context->info);
-    if (true || _context->info->gl_khr_debug)
+    if (_context->info->gl_khr_debug)
     {
         DispatchTableGL *_next = &_context->dispatcher.front();
         RegalAssert(_next);
@@ -30457,7 +30457,7 @@ extern "C" {
     App("glPushDebugGroup","(", toString(source), ", ", id, ", ", length, ", ", boost::print::quote(message,'"'), ")");
     if (!_context) return;
     RegalAssert(_context->info);
-    if (true || _context->info->gl_khr_debug)
+    if (_context->info->gl_khr_debug)
     {
         DispatchTableGL *_next = &_context->dispatcher.front();
         RegalAssert(_next);
