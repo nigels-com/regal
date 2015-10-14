@@ -31,8 +31,6 @@ For more information, please refer to <http://unlicense.org/>
 // It only works in 16 bit color modes or higher (since it doesn't
 // create a palette).
 
-#include <windows.h>
-
 #include <GL/Regal.h>
 
 #ifdef _WIN32
@@ -45,9 +43,7 @@ For more information, please refer to <http://unlicense.org/>
 #define GLAPIENTRY __stdcall
 #endif
 
-//extern "C" {
 #include <GL/osmesa.h>
-//}
 
 #include "render.h"
 
@@ -61,7 +57,7 @@ main(int argc, char *argv[])
   OSMesaContext context;
   const GLsizei width = 800;
   const GLsizei height = 600;
-  GLubyte buffer[width*height*4];
+  GLubyte *buffer = new GLubyte [width*height*4];
 
   context = OSMesaCreateContext(OSMESA_RGBA, NULL );
 
@@ -78,6 +74,8 @@ main(int argc, char *argv[])
   RegalMakeCurrent(NULL);
 
   OSMesaDestroyContext(context);
+
+  delete [] buffer;
 
   return EXIT_SUCCESS;
 }
