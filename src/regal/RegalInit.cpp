@@ -1,9 +1,10 @@
 /*
-  Copyright (c) 2011-2013 NVIDIA Corporation
-  Copyright (c) 2011-2012 Cass Everitt
-  Copyright (c) 2012 Scott Nations
+  Copyright (c) 2011-2014 NVIDIA Corporation
+  Copyright (c) 2012-2015 Google Inc.
+  Copyright (c) 2012-2015 Nigel Stewart
+  Copyright (c) 2012-2014 Scott Nations
+  Copyright (c) 2011-2013 Cass Everitt
   Copyright (c) 2012 Mathias Schott
-  Copyright (c) 2012-2013 Nigel Stewart
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without modification,
@@ -69,7 +70,7 @@ namespace Json { struct Output : public ::boost::print::json::output<std::string
 
 static ::REGAL_NAMESPACE_INTERNAL::Init *_init = NULL;
 
-#if !defined(REGAL_NAMESPACE) && REGAL_SYS_WIN32
+#if !defined(REGAL_NAMESPACE) && REGAL_SYS_WGL
 // Phony advapi32.dll, gdi32.dll and user32.dll dependencies for
 // closely matching opengl32.dll
 
@@ -93,7 +94,7 @@ Init::Init()
 {
   atexit(atExit);
 
-#if !defined(REGAL_NAMESPACE) && REGAL_SYS_WIN32
+#if !defined(REGAL_NAMESPACE) && REGAL_SYS_WGL
   // Check our phony advapi32.dll, gdi32.dll and user32.dll dependencies
   // to prevent them being optimized out of a release-mode binary.
   // NOTE - these function pointers should _not_ be called, ever!
