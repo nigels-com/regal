@@ -22,7 +22,7 @@ ${LICENSE}
 
 ${REGAL_SYS}
 
-#if REGAL_SYS_WGL
+#if REGAL_SYS_WIN32
 # define REGAL_CALL __stdcall
 #else
 # define REGAL_CALL
