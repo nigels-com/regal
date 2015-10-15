@@ -29,6 +29,8 @@
 
 #include "RegalUtil.h"
 
+#if REGAL_HTTP
+
 REGAL_GLOBAL_BEGIN
 
 #include <set>
@@ -37,11 +39,7 @@ REGAL_GLOBAL_BEGIN
 #include <deque>
 #include <string>
 
-#if REGAL_HTTP
-
 #include "pcre.h"
-
-#endif
 
 #include "RegalMutex.h"
 
@@ -69,23 +67,18 @@ struct Breakpoint {
   : enabled(true)
   , count(0)
   , stopAfterCount(0)
-#if REGAL_HTTP
   , re(NULL)
-#endif
   {}
 
   ~Breakpoint() {
-#if REGAL_HTTP
     if( re ) {
       pcre_free( re );
     }
-#endif
   }
 
   void SetRegularExpression( const std::string & newRe )
   {
     UNUSED_PARAMETER(newRe);
-#if REGAL_HTTP
     if( re ) {
       pcre_free( re );
     }
@@ -95,16 +88,13 @@ struct Breakpoint {
     if( re == NULL ) {
       Error( "Could not compile breakpoint regular expression '", reString, "' - ", offset, " - ", errStr );
     }
-#endif
   }
 
   bool enabled;
   int count;
   int stopAfterCount;
   std::string reString;
-#if REGAL_HTTP
   pcre *re;
-#endif
 };
 
 enum HttpRunState {
@@ -202,5 +192,7 @@ public:
 };
 
 REGAL_NAMESPACE_END
+
+#endif
 
 #endif // __REGAL_DISPATCH_HTTP_H__
