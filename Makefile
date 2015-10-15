@@ -28,6 +28,7 @@ include Makefile.glsloptlib
 include Makefile.pcrelib
 include Makefile.regal
 include Makefile.regalw
+include Makefile.regalo
 include Makefile.glu
 include Makefile.glut
 include Makefile.glew
@@ -37,6 +38,7 @@ include Makefile.glewinfo
 
 include Makefile.dreamtorus
 include Makefile.dreamtorus_static
+include Makefile.dreamtorus_osmesa
 include Makefile.alphatorus
 include Makefile.tiger
 include Makefile.nacl

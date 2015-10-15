@@ -1,0 +1,130 @@
+ifndef MAKEFILE_REGALO_INCLUDED
+MAKEFILE_REGALO_INCLUDED := 1
+
+.PHONY: regalo.lib regalo.clean
+
+include build/common.inc
+
+include build/regal.inc
+
+include Makefile.regal
+
+#
+# Regal for OSMesa
+#
+
+REGALO.SHARED    ?= libRegalO.so
+
+# Static library target not yet supported
+
+REGALO.STATIC :=
+
+# Shared library target not currently supported for NaCL or emscripten
+
+ifneq ($(filter nacl% emscripten%,$(SYSTEM)),)
+REGALO.SHARED :=
+endif
+
+
+ifdef REGALO.SHARED
+
+all:: regalo.lib
+
+clean:: regalo.clean
+
+REGALO.LDFLAGS        := -lOSMesa -lstdc++ -pthread -lm -lrt
+REGALO.LIBS           :=
+
+REGALO.SRCS           := $(REGAL.CXX)
+REGALO.SRCS           += src/md5/src/md5.c
+REGALO.SRCS           += src/jsonsl/jsonsl.c
+
+REGALO.CFLAGS         += -DREGAL_SYS_OSMESA=1
+REGALO.INCLUDE        := $(REGAL.INCLUDE)
+
+# Optional flags
+
+ifeq ($(MODE),release)
+REGALO.CFLAGS       += -DNDEBUG
+#REGALO.CFLAGS       += -DREGAL_NO_TLS=0       # 1 for single threaded
+endif
+
+#
+
+REGALO.CFLAGS         += -fvisibility=hidden
+
+REGALO.SRCS.NAMES     := $(notdir $(REGALO.SRCS))
+
+REGALO.HEADERS        :=
+REGALO.HEADERS        += include/GL/Regal.h
+REGALO.HEADERS        += src/regal/RegalPrivate.h
+
+REGALO.SOBJS          := $(addprefix tmp/$(SYSTEM)/regalo/shared/,$(REGALO.SRCS.NAMES))
+REGALO.SOBJS          := $(REGALO.SOBJS:.c=.o)
+REGALO.SOBJS          := $(REGALO.SOBJS:.cpp=.o)
+REGALO.SDEPS          := $(LIBS.SOBJS:.o=.d)
+
+-include $(REGALO.DEPS) $(REGALO.SDEPS)
+
+REGALO.LIBS           += $(LDFLAGS.X11)
+
+ifneq ($(filter linux%,$(SYSTEM)),)
+REGALO.SONAME     := libRegalO.so.$(SO_MAJOR)
+REGALO.DEVLNK     := libRegalO.so
+REGALO.SHARED     := libRegalO.so.$(SO_VERSION)
+REGALO.LDFLAGS.SO := $(LDFLAGS.SO) $(LDFLAGS.DYNAMIC) -Wl,-soname=$(REGALO.SONAME)
+endif
+
+ifneq ($(filter darwin%,$(SYSTEM)),)
+REGALO.SONAME     := libRegalO.$(SO_MAJOR).dylib
+REGALO.DEVLNK     := libRegalO.dylib
+REGALO.SHARED     := libRegalO.$(SO_VERSION).dylib
+REGALO.FRAMEWORK  := RegalO
+REGALO.LDFLAGS.SO := $(LDFLAGS.SO) $(LDFLAGS.DYNAMIC) -current_version $(SO_VERSION) -compatibility_version $(SO_MAJOR)
+endif
+
+ifdef REGALO.SHARED
+regalo.lib: lib/$(SYSTEM)/$(REGALO.SHARED)
+endif
+
+regalo.clean:
+	$(RM) -r tmp/$(SYSTEM)/regalo/static
+	$(RM) -r tmp/$(SYSTEM)/regalo/shared
+ifdef REGALO.SHARED
+	$(RM) -r bin/$(SYSTEM)/$(REGALO.SHARED)
+endif
+
+REGALO.SHARED.DEPEND :=
+
+ifdef REGALO.SHARED
+lib/$(SYSTEM)/$(REGALO.SHARED): $(REGAL.SHARED.DEPEND) $(REGALO.SOBJS)
+	$(LOG_LD)$(CCACHE) $(LD) $(LDFLAGS.EXTRA) $(REGALO.LDFLAGS.SO) -o $@ $(REGALO.SOBJS) $(REGAL.SHARED.DEPEND) $(REGALO.LIBS) $(REGALO.LDFLAGS)
+ifneq ($(LN),)
+	$(LN) $(REGALO.SHARED) lib/$(SYSTEM)/$(REGALO.SONAME)
+	$(LN) $(REGALO.SHARED) lib/$(SYSTEM)/$(REGALO.DEVLNK)
+ifneq ($(REGALO.FRAMEWORK),)
+	$(LN) $(REGALO.SHARED) lib/$(SYSTEM)/$(REGALO.FRAMEWORK)
+endif
+endif
+ifneq ($(STRIP),)
+	$(LOG_STRIP)$(STRIP) -x $@
+endif
+ifneq ($(ABIDUMP),)
+	$(LOG_ABIDUMP)$(ABIDUMP) $@ -o $@.dump
+endif
+endif
+
+tmp/$(SYSTEM)/regalo/shared/%.o: src/regal/%.cpp $(REGALO.HEADERS)
+	@mkdir -p $(dir $@)
+	$(LOG_CXX)$(CCACHE) $(CXX) $(REGALO.CFLAGS) $(CFLAGS) $(PICFLAG) $(CFLAGS.SO) $(REGALO.INCLUDE) -o $@ -c $<
+
+tmp/$(SYSTEM)/regalo/shared/%.o: src/md5/src/%.c $(REGALO.HEADERS)
+	@mkdir -p $(dir $@)
+	$(LOG_CC)$(CCACHE) $(CC) $(REGALO.CFLAGS) $(CFLAGS) $(PICFLAG) $(CFLAGS.SO) $(REGALO.INCLUDE) -o $@ -c $<
+
+tmp/$(SYSTEM)/regalo/shared/%.o: src/jsonsl/%.c $(REGALO.HEADERS)
+	@mkdir -p $(dir $@)
+	$(LOG_CC)$(CCACHE) $(CC) $(REGALO.CFLAGS) $(CFLAGS) $(PICFLAG) $(CFLAGS.SO) $(REGALO.INCLUDE) -o $@ -c $<
+
+endif
+endif

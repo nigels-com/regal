@@ -440,6 +440,8 @@ typedef void (*OSMESAproc)();
 
 #if REGAL_SYS_WIN32
 extern "C" __declspec(dllimport) OSMESAproc __stdcall OSMesaGetProcAddress( const char *funcName );
+#else
+extern "C" void * OSMesaGetProcAddress( const char *funcName );
 #endif
 
 void *GetProcAddress( const char *entry )

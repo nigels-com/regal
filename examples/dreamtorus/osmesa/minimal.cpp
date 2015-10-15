@@ -36,6 +36,9 @@ For more information, please refer to <http://unlicense.org/>
 #ifdef _WIN32
 #undef GLAPI
 #define GLAPI __declspec(dllimport)
+#else
+#undef GLAPI
+#define GLAPI
 #endif
 
 #ifdef _WIN32

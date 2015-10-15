@@ -1,0 +1,75 @@
+ifndef MAKEFILE_DREAMTORUS_OSMESA_INCLUDED
+MAKEFILE_DREAMTORUS_OSMESA_INCLUDED := 1
+
+.PHONY: dreamtorus_osmesa.bin dreamtorus_osmesa.clean
+
+include build/common.inc
+
+include Makefile.regalo
+
+DREAMTORUS_OSMESA.EXE := dreamtorus_osmesa
+
+ifneq ($(filter emscripten%,$(SYSTEM)),)
+DREAMTORUS_OSMESA.EXE :=
+endif
+
+ifneq ($(filter nacl%,$(SYSTEM)),)
+DREAMTORUS_OSMESA.EXE :=
+endif
+
+ifdef DREAMTORUS_OSMESA.EXE
+
+#
+# dreamtorus
+#
+
+include Makefile.regalo
+
+ifndef REGALO.SHARED
+$(error dreamtorus needs Regalo.)
+endif
+
+all:: dreamtorus_osmesa.bin
+
+clean:: dreamtorus_osmesa.clean
+
+dreamtorus_osmesa.bin: bin/$(SYSTEM)/$(DREAMTORUS_OSMESA.EXE)
+
+dreamtorus_osmesa.clean:
+	$(RM) -r tmp/$(SYSTEM)/dreamtorus_osmesa/static
+	$(RM) -r bin/$(SYSTEM)/$(DREAMTORUS_OSMESA.EXE)
+
+DREAMTORUS_OSMESA.SRCS       += examples/dreamtorus/src/render.cpp
+DREAMTORUS_OSMESA.SRCS       += examples/dreamtorus/osmesa/minimal.cpp
+DREAMTORUS_OSMESA.SRCS.NAMES := $(notdir $(DREAMTORUS_OSMESA.SRCS))
+DREAMTORUS_OSMESA.OBJS       := $(addprefix tmp/$(SYSTEM)/dreamtorus_osmesa/static/,$(DREAMTORUS_OSMESA.SRCS.NAMES))
+DREAMTORUS_OSMESA.OBJS       := $(DREAMTORUS_OSMESA.OBJS:.cpp=.o)
+DREAMTORUS_OSMESA.DEPS       := $(DREAMTORUS_OSMESA.DEPS:.o=.d)
+DREAMTORUS_OSMESA.CFLAGS     := -DREGAL_SYS_OSMESA=1 -Iinclude -Iexamples/dreamtorus/src
+
+DREAMTORUS_OSMESA.LIBS       += -Llib/$(SYSTEM)
+
+DREAMTORUS_OSMESA.LIBS       += -lOSMesa -lm -pthread
+
+-include $(DREAMTORUS_OSMESA.DEPS)
+
+tmp/$(SYSTEM)/dreamtorus_osmesa/static/%.o: examples/dreamtorus/src/%.cpp
+	@mkdir -p $(dir $@)
+	$(LOG_CXX)$(CCACHE) $(CXX) $(DREAMTORUS_OSMESA.CFLAGS) $(CFLAGS) $(CFLAGS.SO) -o $@ -c $<
+
+tmp/$(SYSTEM)/dreamtorus_osmesa/static/%.o: examples/dreamtorus/osmesa/%.cpp
+	@mkdir -p $(dir $@)
+	$(LOG_CXX)$(CCACHE) $(CXX) $(DREAMTORUS_OSMESA.CFLAGS) $(CFLAGS) $(CFLAGS.SO) -o $@ -c $<
+
+DREAMTORUS_OSMESA.DEPEND :=
+DREAMTORUS_OSMESA.DEPEND += lib/$(SYSTEM)/$(REGALO.SHARED) lib/$(SYSTEM)/$(PCRE.STATIC)
+
+bin/$(SYSTEM)/$(DREAMTORUS_OSMESA.EXE): $(DREAMTORUS_OSMESA.OBJS) $(DREAMTORUS_OSMESA.DEPEND)
+	@mkdir -p $(dir $@)
+	$(LOG_LD)$(CCACHE) $(LD) $(LDFLAGS.EXTRA) -o $@ $(DREAMTORUS_OSMESA.OBJS) lib/$(SYSTEM)/$(REGALO.SHARED) $(DREAMTORUS_OSMESA.LIBS) $(REGAL.LDFLAGS)
+ifneq ($(STRIP),)
+	$(LOG_STRIP)$(STRIP) -x $@
+endif
+
+endif
+endif
