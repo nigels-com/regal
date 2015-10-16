@@ -36,6 +36,11 @@ REGALO.LDFLAGS        := -lOSMesa -lstdc++ -pthread -lm -lrt
 REGALO.LIBS           :=
 
 REGALO.SRCS           := $(REGAL.CXX)
+
+ifeq ($(filter nacl% emscripten%,$(SYSTEM)),)
+REGALO.SRCS           += src/civetweb/civetweb.c
+endif
+
 REGALO.SRCS           += src/md5/src/md5.c
 REGALO.SRCS           += src/jsonsl/jsonsl.c
 
@@ -117,6 +122,10 @@ endif
 tmp/$(SYSTEM)/regalo/shared/%.o: src/regal/%.cpp $(REGALO.HEADERS)
 	@mkdir -p $(dir $@)
 	$(LOG_CXX)$(CCACHE) $(CXX) $(REGALO.CFLAGS) $(CFLAGS) $(PICFLAG) $(CFLAGS.SO) $(REGALO.INCLUDE) -o $@ -c $<
+
+tmp/$(SYSTEM)/regalo/shared/%.o: src/civetweb/%.c $(REGALO.HEADERS)
+	@mkdir -p $(dir $@)
+	$(LOG_CC)$(CCACHE) $(CC) $(REGALO.CFLAGS) $(CFLAGS) $(PICFLAG) $(CFLAGS.SO) $(REGALO.INCLUDE) -o $@ -c $<
 
 tmp/$(SYSTEM)/regalo/shared/%.o: src/md5/src/%.c $(REGALO.HEADERS)
 	@mkdir -p $(dir $@)
