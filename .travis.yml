@@ -15,10 +15,10 @@ addons:
   - libosmesa-dev
 
 script:
- - scripts/travis-build.sh
+ - build/travis/build.sh
 
 install:
- - scripts/travis-install.sh
+ - build/travis/install.sh
 
 env:
  - SYSTEM=linux
