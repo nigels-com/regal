@@ -12,7 +12,7 @@ addons:
   - libglib2.0-0:i386
   - libxmu-dev
   - libxi-dev
-  - libosmesa-dev
+  - libosmesa6-dev
 
 script:
  - build/travis/build.sh
