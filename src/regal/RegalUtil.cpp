@@ -136,7 +136,7 @@ enum Library
   LIBRARY_EGL
 };
 
-#ifndef __native_client__
+#if !defined(REGAL_SYS_OSMESA) && !defined(__native_client__)
 static
 const char *libraryLocation(const Library &library)
 {
